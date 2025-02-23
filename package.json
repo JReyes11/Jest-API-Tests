@@ -1,0 +1,41 @@
+{
+  "name": "api-automation",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "qa": "jest",
+    "staging": "jest",
+    "test": "NODE_OPTIONS='--no-deprecation' jest"
+  },
+  "test": {
+    "verbose": true,
+    "rootDir": "./__tests__/*/*.js",
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  },
+  "private": true,
+  "dependencies": {
+    "@babel/preset-env": "^7.23.2",
+    "csvtojson": "^2.0.10",
+    "dayjs": "^1.11.9",
+    "dayjs-plugin-utc": "^0.1.2",
+    "dotenv": "^16.3.1",    
+    "@faker-js/faker": "^9.5.0",
+    "fs": "0.0.1-security",
+    "jest-html-reporter": "^3.4.0",
+    "json2csv": "^6.0.0-alpha.2",
+    "regenerator-runtime": "^0.13.11",
+    "save": "^2.4.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "assert": "^2.0.0",
+    "axios": "^0.21.1",
+    "jest": "^26.6.3",
+    "prettier": "^2.3.0"
+  },
+  "resolutions": {
+    "punycode": "^2.3.1"
+  }
+}
