@@ -1,10 +1,9 @@
 {
-  "name": "api-automation",
+  "name": "jest-api-tests",
   "version": "1.0.0",
   "license": "MIT",
+  "author": "josereyes",
   "scripts": {
-    "qa": "jest",
-    "staging": "jest",
     "test": "NODE_OPTIONS='--no-deprecation' jest"
   },
   "test": {
@@ -24,7 +23,6 @@
     "@faker-js/faker": "^9.5.0",
     "fs": "0.0.1-security",
     "jest-html-reporter": "^3.4.0",
-    "json2csv": "^6.0.0-alpha.2",
     "regenerator-runtime": "^0.13.11",
     "save": "^2.4.0"
   },
