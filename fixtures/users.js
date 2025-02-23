@@ -1,6 +1,6 @@
-export const userInfo = async function () {
-  return {
-    data: [
+class userFixtures {
+  userIdAndEmail() {
+    return [
       {
         id: "x76enmkj236",
         email: "batman21@batcave.net",
@@ -13,6 +13,26 @@ export const userInfo = async function () {
         id: "n9s7nben6",
         email: "nolan512@classic.com",
       },
-    ],
-  };
-};
+    ];
+  }
+  userKeys() {
+    return {
+      id: "",
+      email: "",
+      firstName: "",
+      lastName: "",
+      full_name: "",
+      address1: "",
+      address2: "",
+      city: "",
+      state: "",
+      zipCode: "",
+      phoneNumber: "",
+      alternative_phone: "",
+      company: "",
+      country: "",
+    };
+  }
+}
+
+export default new userFixtures();
