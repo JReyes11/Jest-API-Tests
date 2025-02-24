@@ -3,10 +3,24 @@ import { faker } from "@faker-js/faker";
 import api from "./apiRequests.js";
 import userFixtures from "../fixtures/users";
 import { endpoints } from "../fixtures/parameters.js";
+import { address } from '../fixtures/addressList.js'
 
 class helper {
+  async getRandomAddress() {
+    const addressList = await address()
+    return addressList.data[Math.floor(Math.random() * addressList.data.length-1)]    
+  }
+  async updateUserAddressObj(obj) {
+    const randomAddress = await new this.getRandomAddress()    
+    obj["address1"] = randomAddress.address1
+    obj["address2"] = randomAddress.address2
+    obj["city"] = randomAddress.city
+    obj["state"] = randomAddress.state
+    obj["zipCode"] = randomAddress.zipCode
+    return obj;
+  }
   async assertUserPayload(response, userObj) {
-    expect(response.id).toBe(userObj.userId);
+    expect(response.id).toBe(userObj.id);
     expect(response.email).toBe(userObj.email);
     expect(response.firstName).toBe(userObj.firstName);
     expect(response.lastName).toBe(userObj.lastName);
@@ -23,21 +37,26 @@ class helper {
     expect(response.items.length).toBe(response.totalItems);
     expect(response.totalPrice).toBeGreaterThan(0);
   }
-  async mockNewUserObject() {
+  async mockNewUserObject() {    
+    const randomAddress = await this.getRandomAddress()
     const userObj = await userFixtures.userKeys()
-    const firstName = faker.person.firstName();
-    const lastName = faker.person.lastName();
+    const fullName = faker.person.fullName()
     const randomNumber = Math.floor(Math.random() * 99999);
-    const letters = firstName.slice(0, firstName.length - 2);
+    const letters = fullName.split(' ')[0].slice(0, fullName.split(' ')[0].length - 2);
     userObj["id"] = `${letters}${randomNumber}`;
-    userObj["userId"] = `${letters}${randomNumber}`;
-    userObj["firstName"] = firstName;
-    userObj["lastName"] = lastName;
-    userObj["full_name"] = `${firstName} ${lastName}`;
-    userObj["company"] = `${lastName} Industrial `;
-    userObj["address1"] = `${randomNumber} ${firstName} Ave`;
-    userObj["email"] = `${firstName}${randomNumber}@${faker.hacker.noun()}.com`;
+    userObj["email"] = `${fullName.split(' ')[0]}${randomNumber}@${faker.hacker.noun()}.com`;
+    userObj["firstName"] = fullName.split(' ')[0];
+    userObj["lastName"] =  fullName.split(' ')[1];
+    userObj["full_name"] = fullName;
+    userObj["address1"] = randomAddress.address1
+    userObj["address2"] = randomAddress.address2
+    userObj["city"] = randomAddress.city
+    userObj["state"] = randomAddress.state
+    userObj["zipCode"] = randomAddress.zipCode
     userObj["phoneNumber"] = `(512)-555-${dayjs().format("mmss")}`;
+    userObj["alternative_phone"] = "",
+    userObj["company"] = `${faker.hacker.noun()} Enterprises`;
+    userObj["country"] = "United States"
     return userObj;
   }
   async mockOrderRequestObject(userObj) {

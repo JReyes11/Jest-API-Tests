@@ -9,6 +9,12 @@ class apiRequests {
     const conf = await new this.postConfig(endpoint, obj);
     return await new this.makeRequest(conf);
   }
+  async updateUser(obj) {
+    const params = await endpoints();
+    const endpoint = `${params.baseUrl}${params.users}/${obj.id}`;
+    const putConf = await new this.putConfig(endpoint, obj);
+    return await new this.makeRequest(putConf);
+  }
   async getOrders() {
     const params = await endpoints();
     const endpoint = `${params.baseUrl}${params.orders}`;
@@ -19,6 +25,12 @@ class apiRequests {
     const params = await endpoints();
     const userEndpoint = `${params.baseUrl}${params.users}`;
     const config = await new this.getConfig(userEndpoint);
+    return await new this.makeRequest(config);
+  }
+  async deleteUser(userId) {
+    const params = await endpoints();
+    const userEndpoint = `${params.baseUrl}${params.users}/${userId}`;
+    const config = await new this.deleteConfig(userEndpoint);
     return await new this.makeRequest(config);
   }
   async getUserById(id) {
@@ -48,6 +60,15 @@ class apiRequests {
   async getConfig(endpoint) {
     return {
       method: "GET",
+      url: endpoint,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+  }
+  async deleteConfig(endpoint) {
+    return {
+      method: "DELETE",
       url: endpoint,
       headers: {
         "Content-Type": "application/json",
